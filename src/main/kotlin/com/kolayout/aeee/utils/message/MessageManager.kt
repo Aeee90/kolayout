@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class MessageManager {
 
-    companion object {
-        const val MESSAGE_KEY = "MESSAGE"
-    }
+    val MESSAGE_KEY = "MESSAGE"
 
     @Autowired
     private val messageSource: MessageSource? = null

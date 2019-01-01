@@ -28,12 +28,7 @@ class Paging {
 
     private val PAGE_BUTTON_SIZE = 4
 
-
-    constructor(count: Int): this(count, 0, 1)
-
-    constructor(count: Int, rowSize: Int): this(count, rowSize, 1)
-
-    constructor(count: Int, rowSize: Int, pageNO: Int){
+    constructor(count: Int, rowSize: Int = 0, pageNO: Int = 1){
         val total = if (count <= 0) 0 else count
         if (rowSize <= 0) { //rowSize all로 계산
             this.rowStart = 1

@@ -22,8 +22,7 @@ class FileUtils {
     @Value("\${app.upload.dir}")
     private val UPLOAD_PATH: String? = null
 
-    @Autowired
-    private val fileStorageManager: FileStorageManager? = null
+    private val fileStorageManager: FileStorageManager = FileStorageManager()
 
     fun write(folderPath: FolderPathConfig, files: List<MultipartFile>): List<FileInfo> =
         files.map {

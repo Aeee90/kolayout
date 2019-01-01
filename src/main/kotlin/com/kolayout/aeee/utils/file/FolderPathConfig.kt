@@ -6,13 +6,7 @@ enum class FolderPathConfig (
         val FILE_MAX: Int
 ){
 
-    DISCARD("DISCARD_REQ", 100, 100),
-    DISTRIBUTION("DIST", 100, 100),
-    DONOR("DONOR", 100, 1000),
-    PROJECT("PROJECT", 100, 100),
-    SOP("SOP", 100, 1000),
-    NOTICE("NOTICE", 100, 1000);
-
+    HOME("HOME", 100, 100);
 
     fun getFolderCountMax(depth: Int): Int {
         var max: Int

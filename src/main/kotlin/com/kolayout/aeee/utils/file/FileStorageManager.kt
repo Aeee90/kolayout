@@ -3,8 +3,7 @@ package com.kolayout.aeee.utils.file
 import org.springframework.stereotype.Component
 import java.util.HashMap
 
-@Component
-class FileStorageManager {
+internal class FileStorageManager {
 
     private val folderCountMap: MutableMap<FolderPathConfig, ManagerFolder>
 
