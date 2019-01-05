@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kolayout.aeee.web.mapper._Alias">
+
+    <resultMap id="LOGIN" type="com.kolayout.aeee.web.voLogin">
+        <id column="USER_ID" property="user_id" />
+        <result column="PASS" property="pass" />
+    </resultMap>
+
+    <resultMap id="USER" type="com.kolayout.aeee.web.vo.User">
+        <id column="USER_ID" property="user_id" />
+        <result column="PASS" property="pass" />
+        <result column="USER_NAME" property="user_name" />
+        <result column="EMAIL" property="email" />
+        <result column="MOBILE" property="mobile" />
+        <result column="ORGANIZATION" property="organization" />
+        <result column="APPROVED_YN" property="approved_yn" />
+        <result column="ROOT_TYPE" property="root_type" />
+        <result column="CREATE_TS" property="createTS" />
+        <result column="APPROVED_TS" property="approvedTS" />
+        <result column="DELETE_YN" property="delete_yn" />
+        <result column="DELETE_TS" property="delete_ts" />
+    </resultMap>
+
+</mapper>

@@ -56,6 +56,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.mariadb.jdbc:mariadb-java-client")
+	implementation("commons-dbcp:commons-dbcp:1.4")
+	implementation("org.mybatis:mybatis:3.4.6")
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')

@@ -1,0 +1,124 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kolayout.aeee.web.mapper.UserMapper">
+
+    <resultMap id="userList" type="hashmap">
+        <id property="user_id" column="USER_ID"></id>
+        <association property="user" column="USER_ID" javaType="com.kolayout.aeee.web.vo.User" resultMap="com.kolayout.aeee.web.mapper._AliasMapper.USER"></association>
+    </resultMap>
+
+    <select id="count" parameterType="hashmap" resultType="_int" >
+        SELECT COUNT(USER_ID)
+        FROM ONM_USER
+        WHERE 1=1
+        <if test="User.user_name != null">
+            AND USER_NAME LIKE '%'||#{User.user_name}||'%'
+        </if>
+        <if test="User.mobile != null">
+            AND MOBILE LIKE '%'||#{User.mobileCombined}||'%'
+        </if>
+        <if test="User.root_type != null">
+            AND ROOT_TYPE = #{User.root_type}
+        </if>
+        <if test="User.user_status != null">
+            AND USER_STATUS = #{User.user_status}
+        </if>
+    </select>
+
+    <select id="list" parameterType="hashmap" resultMap="userList">
+        SELECT base.*
+        FROM (
+            SELECT
+              ROW_NUMBER() OVER (ORDER BY CREATE_TS DESC) AS no, USER_ID, USER_NAME, EMAIL, MOBILE, ORGANIZATION, APPROVED_YN, ROOT_TYPE, CREATE_TS, APPROVED_TS, DELETE_YN, USER_STATUS
+            FROM ONM_USER
+            WHERE 1=1
+            <if test="User.user_name != null">
+                AND USER_NAME LIKE '%'||#{User.user_name}||'%'
+            </if>
+            <if test="User.mobile != null">
+                AND MOBILE LIKE '%'||#{User.mobileCombined}||'%'
+            </if>
+            <if test="User.root_type != null">
+              AND ROOT_TYPE = #{User.root_type}
+            </if>
+            <if test="User.user_status != null">
+              AND USER_STATUS = #{User.user_status}
+            </if>
+        ) base
+        WHERE 1=1
+        <if test="Paging != null">
+            AND no >= #{Paging.rowStart} AND no <![CDATA[<=]]> #{Paging.rowEnd}
+        </if>
+    </select>
+
+    <select id="login" parameterType="hashmap" resultMap="com.kolayout.aeee.web.mapper._AliasMapper.LOGIN">
+        SELECT
+          USER_ID, PASS
+        FROM ONM_USER
+        WHERE USER_ID = #{Login.user_id}
+    </select>
+
+    <select id="getUser" parameterType="hashmap" resultMap="com.kolayout.aeee.web.mapper._AliasMapper.USER">
+      SELECT
+        USER_ID, USER_NAME, EMAIL, MOBILE, ORGANIZATION, APPROVED_YN, ROOT_TYPE, CREATE_TS, APPROVED_TS, DELETE_YN, USER_STATUS
+      FROM ONM_USER
+      WHERE 1=1
+          <if test="User.user_id != null">
+            AND USER_ID = #{User.user_id}
+          </if>
+          <if test="User.pass != null">
+            AND PASS = #{User.pass}
+          </if>
+          <if test="User.user_name != null">
+            AND USER_NAME = #{User.user_name}
+          </if>
+          <if test="User.email != null">
+            AND EMAIL = #{User.email}
+          </if>
+          <if test="User.mobile != null">
+            AND MOBILE = #{User.mobileCombined}
+          </if>
+          <if test="User.user_status != null">
+            AND USER_STATUS = #{User.user_status}
+          </if>
+          <if test="User.root_type != null">
+            AND ROOT_TYPE = #{User.root_type}
+          </if>
+          <if test="User.delete_yn != null">
+            AND DELETE_YN = #{User.delete_yn}
+          </if>
+          <if test="User.approved_yn != null">
+            AND APPROVED_YN = #{User.approved_yn}
+          </if>
+    </select>
+
+    <insert id="addUser" parameterType="hashmap" >
+        INSERT INTO ONM_USER (
+          USER_ID, PASS, USER_NAME, EMAIL, MOBILE, ORGANIZATION, APPROVED_YN, ROOT_TYPE, CREATE_TS, DELETE_YN, USER_STATUS
+        )
+        VALUES(
+          #{User.user_id}, #{User.pass}, #{User.user_name}, #{User.email}, #{User.mobileCombined}, #{User.organization}, #{User.approved_yn}, #{User.root_type}, NOW(), #{User.delete_yn}, #{User.user_status}
+        )
+    </insert>
+
+    <update id="approvedUser">
+        UPDATE ONM_USER
+        SET APPROVED_TS = CURRENT_TIMESTAMP, APPROVED_YN = #{User.approved_yn}
+            , USER_STATUS = #{User.user_status}
+        WHERE USER_ID = #{User.user_id}
+    </update>
+
+    <update id="updatePass">
+        UPDATE ONM_USER
+        SET PASS = #{User.pass}
+        WHERE USER_ID = #{User.user_id}
+    </update>
+
+    <update id="updateUser">
+        UPDATE ONM_USER
+        SET EMAIL = #{User.email}, MOBILE = #{User.mobileCombined}, ORGANIZATION = #{User.organization}
+        WHERE USER_ID = #{User.user_id}
+    </update>
+
+</mapper>
